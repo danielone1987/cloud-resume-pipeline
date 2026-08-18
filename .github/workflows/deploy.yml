@@ -22,23 +22,20 @@ jobs:
         terraform_version: 1.6.0
 
     # Autentificare securizată prin Workload Identity Federation (FĂRĂ CHEI SECRETE)
-      # Autentificare securizată prin Workload Identity Federation (FĂRĂ CHEI SECRETE)
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
         project_id: 'project-1f84e1ec-fa9e-4a59-9ba'
         workload_identity_provider: 'projects/328912043975/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-        service_account: 'github-actions-deployer@://gserviceaccount.com'
-
+        service_account: 'github-actions-deployer@project-1f84e1ec-fa9e-4a59-9ba.iam.gserviceaccount.com'
 
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
 
     - name: Terraform Init & Validate
       run: |
-        terraform init -migrate-state -force-copy || terraform init -reconfigure
+        terraform init -reconfigure
         terraform validate
-
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
@@ -47,4 +44,5 @@ jobs:
     - name: Deploy Frontend to GCP Storage
       run: |
         gsutil cp index.html gs://danielone1987-cloud-resume-2026/index.html
+
 
