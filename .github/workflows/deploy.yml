@@ -36,8 +36,9 @@ jobs:
 
     - name: Terraform Init & Validate
       run: |
-        terraform init
+        terraform init -migrate-state -force-copy || terraform init -reconfigure
         terraform validate
+
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
