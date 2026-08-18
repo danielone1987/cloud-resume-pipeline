@@ -1,0 +1,40 @@
+name: Deploy Cloud Resume to GCP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.6.0
+
+    # Autentificarea securizată în Google Cloud
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Setup Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Terraform Init & Validate
+      run: |
+        terraform init
+        terraform validate
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+
+    # Sincronizarea folderului/fișierelor cu bucket-ul din Google Cloud Storage
+    - name: Deploy Frontend to GCP Storage
+      run: |
+        gsutil cp index.html gs://my-unique-gcp-resume-bucket-2026/index.html
