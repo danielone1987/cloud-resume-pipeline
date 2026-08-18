@@ -7,18 +7,12 @@ terraform {
     }
   }
 
-  # Fixed backend storage token provider routing
   backend "gcs" {
-    bucket                      = "tf-state-project-1f84e1ec-fa9e-4a59-9ba"
-    prefix                      = "terraform/state"
-    impersonate_service_account = "github-actions-deployer@://gserviceaccount.com"
+    bucket = "tf-state-project-1f84e1ec-fa9e-4a59-9ba"
+    prefix = "terraform/state"
   }
 }
 
-# The rest of your main.tf stays exactly the same below...
-
-
-# The rest of your main.tf remains exactly the same below...
 provider "google" {
   project     = "project-1f84e1ec-fa9e-4a59-9ba" 
   region      = "europe-west1"             
