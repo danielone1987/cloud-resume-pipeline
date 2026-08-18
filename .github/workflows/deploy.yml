@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,11 +21,12 @@ jobs:
       with:
         terraform_version: 1.6.0
 
-    # Autentificarea securizată în Google Cloud
+    # Autentificare securizată prin Workload Identity Federation (FĂRĂ CHEI SECRETE)
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+        workload_identity_provider: 'projects/328912043975/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+        service_account: 'github-actions-deployer@://gserviceaccount.com'
 
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
@@ -34,7 +39,8 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve
 
-    # Sincronizarea folderului/fișierelor cu bucket-ul din Google Cloud Storage
+    # Sincronizarea fișierului index.html cu noul bucket creat în main.tf
     - name: Deploy Frontend to GCP Storage
       run: |
-        gsutil cp index.html gs://my-unique-gcp-resume-bucket-2026/index.html
+        gsutil cp index.html gs://danielone1987-cloud-resume-2026/index.html
+

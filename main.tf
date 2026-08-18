@@ -8,15 +8,15 @@ terraform {
   }
 }
 
-# Configurarea providerului GCP
+# Configurarea providerului GCP folosind ID-ul tău real de proiect
 provider "google" {
-  project     = "ID-UL-PROIECTULUI-TAU-GCP" # Înlocuiește cu ID-ul real al proiectului tău din Google Cloud Console
-  region      = "europe-west1"             # Regiune europeană optimă pentru latență mică în Irlanda
+  project     = "project-1f84e1ec-fa9e-4a59-9ba" 
+  region      = "europe-west1"             
 }
 
-# Crearea Bucket-ului în Google Cloud Storage
+# Crearea Bucket-ului în Google Cloud Storage (Numele trebuie să fie unic global)
 resource "google_storage_bucket" "resume_bucket" {
-  name          = "my-unique-gcp-resume-bucket-2026" # Schimbă cu un nume unic la nivel global
+  name          = "danielone1987-cloud-resume-2026" 
   location      = "EUROPE-WEST1"
   force_destroy = true
 
@@ -34,8 +34,9 @@ resource "google_storage_bucket_iam_member" "public_rule" {
   member = "allUsers"
 }
 
-# Output pentru a vedea link-ul public direct după rulare
+# Output corectat pentru afișarea link-ului public direct după rulare
 output "website_url" {
   value       = "https://googleapis.com{google_storage_bucket.resume_bucket.name}/index.html"
   description = "URL-ul public al CV-ului tău găzduit în Google Cloud"
 }
+
