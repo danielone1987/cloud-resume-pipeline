@@ -32,13 +32,15 @@ jobs:
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
 
-    - name: Terraform Init & Validate
+    - name: Terraform Clean & Init
       run: |
+        rm -rf .terraform*
         terraform init -reconfigure
         terraform validate
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve -input=false
+
 
     # Sincronizarea fișierului index.html cu noul bucket creat în main.tf
     - name: Deploy Frontend to GCP Storage
