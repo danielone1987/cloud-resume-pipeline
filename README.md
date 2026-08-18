@@ -3,7 +3,7 @@
 This project hosts a responsive, modern engineering resume on Google Cloud Platform (GCP) using an automated GitOps workflow. It demonstrates core DevOps practices: Infrastructure as Code (IaC), Continuous Integration/Continuous Deployment (CI/CD), and modern Cloud Security.
 
 ## 🌍 Live Project URL
-👉 **[https://googleapis.com](https://googleapis.com)**
+👉 **[https://storage.googleapis.com/danielone1987-cloud-resume-2026/index.html](https://storage.googleapis.com/danielone1987-cloud-resume-2026/index.html)**
 
 ---
 
