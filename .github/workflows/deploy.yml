@@ -22,11 +22,14 @@ jobs:
         terraform_version: 1.6.0
 
     # Autentificare securizată prin Workload Identity Federation (FĂRĂ CHEI SECRETE)
+      # Autentificare securizată prin Workload Identity Federation (FĂRĂ CHEI SECRETE)
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
+        project_id: 'project-1f84e1ec-fa9e-4a59-9ba'
         workload_identity_provider: 'projects/328912043975/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
         service_account: 'github-actions-deployer@://gserviceaccount.com'
+
 
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
