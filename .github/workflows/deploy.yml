@@ -33,18 +33,22 @@ jobs:
       uses: google-github-actions/setup-gcloud@v2
 
     - name: Terraform Clean & Init
+      env:
+        GOOGLE_IMPERSONATE_SERVICE_ACCOUNT: 'github-actions-deployer@project-1f84e1ec-fa9e-4a59-9ba.iam.gserviceaccount.com'
       run: |
         rm -rf .terraform*
         terraform init -reconfigure
         terraform validate
 
     - name: Terraform Apply
+      env:
+        GOOGLE_IMPERSONATE_SERVICE_ACCOUNT: 'github-actions-deployer@project-1f84e1ec-fa9e-4a59-9ba.iam.gserviceaccount.com'
       run: terraform apply -auto-approve -input=false
-
 
     # Sincronizarea fișierului index.html cu noul bucket creat în main.tf
     - name: Deploy Frontend to GCP Storage
       run: |
         gsutil cp index.html gs://danielone1987-cloud-resume-2026/index.html
+
 
 
